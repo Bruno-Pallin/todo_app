@@ -1,49 +1,30 @@
 import React from 'react';
+import TodoForm from './components/TodoForm';
+import TodoList from './components/TodoList';
 export default class TodoApp extends React.Component {
-  
   state = {
-    inputValue: '',
-    todoList: [
-      'TCC',
-      'Curso React',
-      'Comprar caderno'
-    ],
+    todoList: [],
   }
 
-  handleChange(e) {
+  onSaveTodo(newTodo) {
+    const todoList = this.state.todoList;
     this.setState({
-      inputValue: e.target.value
-    });
-  };
-
-  handleSave(e) {
-    const { inputValue, todoList } = this.state;
-    this.setState({
-      inputValue: '',
       todoList: [
         ...todoList,
-        inputValue
+        newTodo
       ]
     })
   }
-  
+
   render() {
-    const {inputValue, todoList} = this.state;
+    const { todoList } = this.state;
     return (
       <div>
         <h1>TodoApp</h1>
-        <input 
-          value={inputValue}
-          onChange={(e) => this.handleChange(e)}
-          placeholder='Escreva aqui...'
-        />
-        <button onClick={(e) => this.handleSave(e)}>Salvar</button>
-
-        <ul>
-          {todoList.map((todo, index) => {
-            return <li key={index}>{todo}</li>
-          })}
-        </ul>
+        <TodoForm
+          onSaveTodo={newTodo => this.onSaveTodo(newTodo)} />
+          
+        <TodoList todoList={ todoList }/>
       </div>
     );
   }
