@@ -4,13 +4,26 @@ import { setText, addTodo } from '../actions';
 
 const TodoForm = ({ text, setText, addTodo }) => {
   return (
-    <React.Fragment>
-      <input
-        value={text}
-        onChange={e => setText(e.target.value)}
-      />
-      <button onClick={() => addTodo(text)}>Salvar</button>
-    </React.Fragment>
+    <form
+      className='row'
+      onSubmit={(e) => {
+        e.preventDefault();
+        addTodo(text)
+      }}>
+      <div className='input-field col s10'>
+        <input
+          id='todo-input'
+          type='text'
+          value={text}
+          onChange={e => setText(e.target.value)}
+        />
+        <label htmlfor='todo-input'>Novo Todo</label>
+      </div>
+      <div className='input-field col s2'>
+        <button className='btn waves-effect waves-light'>
+          Salvar</button>
+      </div>
+    </form>
   );
 };
 

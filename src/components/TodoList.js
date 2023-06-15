@@ -1,20 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { toggleTodo } from '../actions';
 
-const TodoList = ({ todos }) => {
+const TodoList = ({ todos, toggleTodo }) => {
   return (
-    <ul>
+    <ul className='collection'>
       {todos.map((todo, index) => {
-        return <li key={index}>{todo}</li>
+        return (
+          <li
+            className='collection-item'
+            key={index}
+            onClick={e => toggleTodo(todo)}
+            style={{
+              textDecoration: todo.done ? 'line-through' : null
+            }}>
+            {todo.text}
+          </li>)
       })}
-    </ul> 
+    </ul>
   );
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
-    todos: state.todos
+    todos: state.todos,
   }
 };
 
-export default connect(mapStateToProps)(TodoList);
+const mapDispatchToProps = { toggleTodo }
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

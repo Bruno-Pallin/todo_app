@@ -3,7 +3,7 @@ import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 const TodoApp = props => {
     return (
-      <div>
+      <div className='container'>
         <h1>TodoApp</h1>
         <TodoForm />
         <TodoList />
