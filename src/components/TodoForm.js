@@ -1,35 +1,32 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { setText, addTodo } from '../actions';
 
-export default class TodoForm extends React.Component {
-  state = {
-    inputValue: '',
+const TodoForm = ({ text, setText, addTodo }) => {
+  return (
+    <React.Fragment>
+      <input
+        value={text}
+        onChange={e => setText(e.target.value)}
+      />
+      <button onClick={() => addTodo(text)}>Salvar</button>
+    </React.Fragment>
+  );
+};
+
+function mapStateToProps(state) {
+  return {
+    text: state.text,
   }
+};
 
-  onChange(e) {
-    this.setState({
-      inputValue: e.target.value
-    });
-  };
-
-  onClick(e) {
-    const newTodo = this.state.inputValue;
-
-    this.props.onSaveTodo(newTodo);
-    this.setState({
-      inputValue: '',
-    });
-  };
-
-  render() {
-    const { inputValue } = this.state;
-    return (
-      <React.Fragment>
-        <input
-          value={inputValue}
-          onChange={e => this.onChange(e)}
-        />
-        <button onClick={(e) => this.onClick(e)}>Salvar</button>
-      </React.Fragment>
-    );
+const mapDispatchToProps = { setText, addTodo };
+/*
+A função completa é essa, porém como é um padrão a forma acima funciona corretamente
+function mapDispatchToProps(dispatch) {
+  return {
+    setText: text => dispatch(setText(text))
   }
 }
+*/
+export default connect(mapStateToProps, mapDispatchToProps)(TodoForm);
